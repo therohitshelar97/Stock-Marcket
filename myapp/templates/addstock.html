@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block content %}
+
+      <h2 class="mt-5">Add Stock Here</h2>
+       
+      <div class="container">
+        <form action="{% url 'addstock' %}" class="d-flex" method="POST">
+            {% csrf_token %}
+          <input class="form-control me-2" type="search" placeholder="Add Stock Quotes In Table" aria-label="Search" name="sticker">
+          <button class="btn btn-outline-success" type="submit">Add</button>
+        </form>
+      </div>
+      <br>
+         {% if sticker %}
+      <table class="table table-hover">
+        
+        <thead class="table-dark">
+            <tr>
+              <th scope="col">Company Name</th>
+              <th scope="col">Stock Price</th>
+              <th scope="col">Previous Close</th>
+              <th scope="col">Marcket Cap</th>
+              <th scope="col">YTD Change</th>
+              <th scope="col">52WK High</th>
+              <th scope="col">52WK Low</th>
+            </tr>
+          </thead>
+             {% for output_item in output %}
+          <tbody>
+            <tr>
+              <th scope="row">{{output_item.companyName}}</th>
+              <td>${{output_item.latestPrice}}</td>
+              <td>{{output_item.previousClose}}</td>
+              <td>{{output_item.marketCap}}</td>
+              <td>{{output_item.ytdChange}}</td>
+              <td>{{output_item.week52High}}</td>
+              <td>{{output_item.week52Low}}</td>
+              
+            </tr>
+            {% endfor %}
+
+      </table>
+        {% else %}
+           <div class=" alert alert-info">
+              <h4>Stock Not Available Here</h4>
+           </div>
+    {% endif %}  
+    
+        
+          <!-- {{ output_item }}<br><br> -->
+        
+
+          
+          
+         
+{% endblock content %}

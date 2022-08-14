@@ -1,0 +1,96 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="bg-info container-fluid">
+<div>
+    <br><br>
+
+    
+     
+    <br><br>
+    
+    {% if sticker %}
+        <!-- {{sticker}} -->
+
+        <h2 align="center" class="alert alert-success">Welcome To The Stock Exchange</h2>
+        <div class="mt-50">
+        <form action="{% url 'home' %}" class="d-flex " method="POST">
+            {% csrf_token %}
+          <input class="form-control me-2" type="search" placeholder="Get Stock Quotes:- Enter Stock Symbol Of Company" aria-label="Search" name="sticker">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+        </div>
+
+        {% else %}
+           <h1 class="text-danger">{{api.companyName}}</h1><br>
+           <h4 class="text-danger">Symbol:-{{api.symbol}}</h4> 
+           Exchange:-{{api.primaryExchange}}
+    </div>
+
+    <div class="mt-5">
+        <h4>Last_Stock_Price</h4>
+        <table class="table table-hover">
+            <tr class="bg-secondary">
+                <th>Sector</th>
+                <th>Last_Sale_Price</th>
+                <th>Last_Sale_Size</th>
+                <th>Last_Sale_Time</th>
+                <th>Volume</th>
+            </tr>
+            {% for api in apid %}
+            <tr class="">
+                <td>{{api.sector}}</td>
+                <td>{{api.lastSalePrice}}</td>
+                <td>{{api.lastSaleSize}}</td>
+                <td>{{api.lastSaleTime}}</td>
+                <td>{{api.volume}}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        
+    </div>
+
+    <div class="mt-5">
+        <h4>Current_Stock_Price</h4>
+        <table class="table table-hover">
+            <tr class="bg-secondary">
+                <th>Price</th>
+                <th>Previous Close</th>
+                <th>Market Cap</th>
+                <th>YTD Change</th>
+                <th>52wk High</th>
+                <th>52wk Low</th>
+            </tr>
+            <tr class="text-blue">
+                <td>${{api.latestPrice}}</td>
+                <td>{{api.previousClose}}</td>
+                <td>{{api.marketCap}}</td>
+                <td>{{api.ytdChange}}</td>
+                <td>{{api.week52High}}</td>
+                <td>{{api.week52Low}}</td>
+            </tr>
+        </table>
+        <div>
+        {% for data in alpha %}
+
+            {{data}}
+
+         {% endfor %}
+          
+            
+        </div>
+        {% endif %}
+        <br><br>
+        <!-- {{api}} -->
+        
+    {% if api == 'Error....' %}
+        <h4>Error Occure in your api</h4>
+    
+        
+     
+        <!-- {% for key,value in api.items %}
+        {{key}} : {{value}}<br>
+        {% endfor %} -->
+    {% endif %}
+</div>
+</div>
+{% endblock content %}

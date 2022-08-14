@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+     
+     {% if sticker %}
+    <h2 class="mt-5">Hello i am About</h2>
+      {% for item in sticker %}
+            {{item}} | <a href="{% url 'delete' item.id %}">Delete</a><br>
+      {% endfor %}
+    {% else %}
+       <div class="alert alert-info">
+          <h3>Stock Data Not Found</h3>
+       </div>
+    {% endif %}
+      
+      
+{% endblock content %}
